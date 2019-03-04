@@ -15,6 +15,8 @@ def main():
 
     args = parser.parse_args()
     vs = video_send(args.server_ip, args.video_port)
+    vs.capture()
 
 if __name__ == '__main__':
+    main()
     print('client')

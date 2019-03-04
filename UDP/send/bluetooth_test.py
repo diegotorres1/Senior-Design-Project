@@ -5,6 +5,7 @@
 # Libraries
 import bluetooth
 import sys
+import os
 
 # Importing the GPIO library to use the GPIO pins of Raspberry pi
 
@@ -48,6 +49,7 @@ class bluetooth_test():
                 # Receivng the data.
                 data = self.client.recv(1024) # 1024 is the buffer size.
                 print('Bluetooth Data : ' + str(data))
+                data = str(data)
                 lines = data.split('\n')
                 for item in lines:
                     pair = item.split(' ')
@@ -92,3 +94,4 @@ class bluetooth_test():
             # Closing the client and server connection
             self.client.close()
             self.server.close()
+    print('End of Bluetooth')
