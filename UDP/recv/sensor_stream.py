@@ -4,7 +4,8 @@
 # Date of Modification : 3/2/2018
 
 # Libraries
-from socket import *
+# from socket import *
+import socket
 class sensor_stream():
     def __init__(self,server_ip, sensor_port):
         data = " "
@@ -18,7 +19,7 @@ class sensor_stream():
             bool = True
             while(bool):
                 try:
-                    with open('data_transfer_files/recieve_s.txt','w') as f:
+                    with open('Cross_Talk/receive_s.txt','w') as f:
                         data = f.write(self.data)
                     f.close()
                     bool = False

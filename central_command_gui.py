@@ -7,13 +7,13 @@ from tkinter import *
 import time
 import threading
 import sys
-sys.path.append("UDP/send/")
+sys.path.append("UDP/recv/")
 from server import server
 import os
 
 class App:
     #NEED TO edit the thread worker
-    def UDP_server_work(self):
+    def UDP_server_worker(self):
         time.sleep(2)
         server_ip = '192.168.0.13'
         # server_ip = '169.234.47.26'
@@ -23,12 +23,13 @@ class App:
 
         while(True):
             try:
-                with open('../Cross_Talk/transmit_f.txt','w') as f:
+                with open('Cross_Talk/transmit_f.txt','w') as f:
                     f.write(
                     'speed_command' + ' ' + str(self.speed) + '\n'
                     'angle_command' + ' ' + str(self.angle)
                     )
                 f.close()
+                time.sleep(.01)
             except Exception as e:
                 print(e)
                 print(os.getcwd())
@@ -36,7 +37,7 @@ class App:
                 pass
             ##object detection
             try:
-                with open('../Cross_Talk/receive_f.txt','r') as f:
+                with open('Cross_Talk/receive_f.txt','r') as f:
                     data = f.read()
                 f.close()
                 self.detected_label.config(text=data)
@@ -46,7 +47,7 @@ class App:
                 pass
             #sensed values
             try:
-                with open('../Cross_Talk/receive_s.txt','r') as f:
+                with open('Cross_Talk/receive_s.txt','r') as f:
                     data = f.read()
                 f.close()
                 measured_dict = {}

@@ -11,9 +11,10 @@ import time
 import sys
 import os
 
-sys.path.insert(0, '../../Bluetooth/')
+print('cwd : ' +str(os.getcwd()))
+sys.path.insert(0, 'Bluetooth/')
 from bluetooth_computer_test import bluetooth_computer_test
-sys.path.insert(0, '../../Object_Detection/')
+sys.path.insert(0, 'Object_Detection/')
 from stop_light_detector import stop_light_detector
 
 class video_stream():
@@ -21,7 +22,8 @@ class video_stream():
         ## Server Params
         self.addr = (server_ip, video_port)
         self.fName = 'img.jpg'
-        self.timeOut = 0.05
+        # self.timeOut = 0.05 LOOK AT THIS
+        self.timeOut = 0.03
         self.buf = 1024
 
         # Image Processing Params
@@ -44,14 +46,21 @@ class video_stream():
                 data, address = s.recvfrom(self.buf)
 
                 #video while loop
+                print('error location : ')
                 try:
                     while(data):
                         f.write(data)
                         s.settimeout(self.timeOut)
                         data, address = s.recvfrom(self.buf)
-                except self.timeout:
+                except Exception as e:
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    self.fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                    print(exc_type, self.fname, exc_tb.tb_lineno)
+                # except self.timeout:
+                    print('timeout')
                     f.close()
                     s.close()
+
 
                 # Image Read
                 image = cv2.imread(self.fName)
@@ -68,7 +77,12 @@ class video_stream():
                 print('Stop Light Time: ' + str(time.time() - temp_time))
 
                 # Bluetooth transmission
-                bc.send_bluetooth_message(light_color)
+                try:
+                    bc.send_bluetooth_message(light_color)
+                except Exception as e:
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    self.fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                    print(exc_type, self.fname, exc_tb.tb_lineno)
                 if(dimension[0] is not None and dimension[0] != 0):
                     bc.send_bluetooth_message(b's')
                     self.output_string = 'stopsign'
@@ -91,23 +105,24 @@ class video_stream():
                 bool = True
                 while(bool):
                     try:
-                        with open('../Cross_Talk/receive_f.txt','w') as f:
+                        with open('Cross_Talk/receive_f.txt','w') as f:
                             data = f.write(self.output_string)
                         f.close()
                         bool = False
                     except:
                         print('recieve_f not available')
+                        print(os.getcwd())
                         pass
                 bool = True
                 while(bool):
                     try:
-                        with open('../Cross_Talk/transmit_f.txt','r') as f:
+                        with open('Cross_Talk/transmit_f.txt','r') as f:
                             data = f.read()
                         bc.send_bluetooth_message(data)
                         f.close()
                         bool = False
                     except Exception as e:
-                        print('transmit_f not available')
+                        print('transmit_f not available for reading')
                         print(os.getcwd())
                         print(e)
                         pass

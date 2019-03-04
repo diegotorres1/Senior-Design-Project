@@ -9,9 +9,10 @@ import numpy as np
 import cv2
 from video_stream import video_stream
 from sensor_stream import sensor_stream
+import threading
 
 class server():
-    def __init__(server_ip, video_port, sensor_port):
+    def __init__(self,server_ip, video_port, sensor_port):
         print('server')
         #video and sensor thread
         s_thread = threading.Thread(target=self.sensor_stream, args=(server_ip,sensor_port))

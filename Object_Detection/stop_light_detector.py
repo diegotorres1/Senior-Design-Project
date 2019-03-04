@@ -8,8 +8,9 @@ class stop_light_detector():
         if(__debug__):
             print('stop_light_detector created')
 
-        self.stop_light_cascade = cv2.CascadeClassifier('TrafficLight_HAAR_16Stages.xml')
-        self.stop_sign_cascade = cv2.CascadeClassifier('Stopsign_HAAR_19Stages.xml')
+        print(os.getcwd())
+        self.stop_light_cascade = cv2.CascadeClassifier('Object_Detection/TrafficLight_HAAR_16Stages.xml')
+        self.stop_sign_cascade = cv2.CascadeClassifier('Object_Detection/Stopsign_HAAR_19Stages.xml')
         # self.stop_light_cascade = cv2.CascadeClassifier('../object_detect/TrafficLight_HAAR_16Stages.xml')
         # self.stop_sign_cascade = cv2.CascadeClassifier('../object_detect/Stopsign_HAAR_19Stages.xml')
 
