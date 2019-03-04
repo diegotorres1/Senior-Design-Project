@@ -7,6 +7,7 @@
 import numpy as np
 from socket import *
 from PIL import Image
+from bluetooth import bluetooth
 import io
 import picamera
 import time
