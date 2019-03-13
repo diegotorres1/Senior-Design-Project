@@ -1,0 +1,2 @@
+save_best_only,image_width,image_height,image_channels,test_size,learning_rate,batch_size,checkpoint_path,epochs,drop_probability
+TRUE,320,160,3,0.3,0.000001,64,D:\\UCI\\Senior Design Project\\checkpoints_4\\,3000,0.5

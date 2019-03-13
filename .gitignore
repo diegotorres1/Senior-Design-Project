@@ -1,0 +1,5 @@
+#folders and files to ignore
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.jpg
